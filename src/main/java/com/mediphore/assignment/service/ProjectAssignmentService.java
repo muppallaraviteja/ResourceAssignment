@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.mediphore.assignment.assignmentStategy.DefaultMatchingStrategy;
 import com.mediphore.assignment.assignmentStategy.SkillMatchingStrategy;
+import com.mediphore.assignment.exception.InvalidStrategyException;
 import com.mediphore.assignment.exception.ProjectNotFoundException;
 import com.mediphore.assignment.object.BookingSlot;
 import com.mediphore.assignment.object.Project;
@@ -41,7 +42,8 @@ public class ProjectAssignmentService {
     this.taskAssignmentRepository = taskAssignmentRepository;
   }
 
-  public List<TaskAssignment> assignResourcesToProject(Long projectId, String strategyType) {
+  public List<TaskAssignment> assignResourcesToProject(Long projectId, String strategyType)
+     {
     Project project = projectRepository.findById(projectId)
         .orElseThrow(() -> new ProjectNotFoundException("Project not found"));
 
@@ -56,7 +58,7 @@ public class ProjectAssignmentService {
         resourceSchedulerService.setStrategy(new DefaultMatchingStrategy());
         break;
       default:
-        throw new IllegalArgumentException("Invalid strategy type");
+        throw new InvalidStrategyException("Invalid strategy type");
     }
 
     List<TaskAssignment> assignments =  resourceSchedulerService.assignResourcesToProject(project, resources);

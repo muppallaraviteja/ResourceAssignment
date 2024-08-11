@@ -8,8 +8,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import lombok.Data;
 
 @Entity
+@Data
 public class Skill {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +20,15 @@ public class Skill {
 
   @ManyToMany(mappedBy = "skills")
   private List<Resource> resources;
+
+  public Skill( Long skillId,String skillName) {
+    this.skillName = skillName;
+    this.skillId = skillId;
+  }
+
+  public Skill() {
+
+  }
 
   public Long getSkillId() {
     return skillId;

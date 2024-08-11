@@ -36,4 +36,13 @@ public class Task {
   @JoinColumn(name = "resource_id")
   private Resource assignedResource;
 
+
+  public Task(Long taskId, String taskName, Date startDate, Date endDate) {
+    this.taskId = taskId;
+    this.taskName = taskName;
+    this.startDate = startDate;
+    this.endDate = endDate;
+  }
+
+
 }
